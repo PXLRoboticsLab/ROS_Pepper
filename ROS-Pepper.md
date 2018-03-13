@@ -28,7 +28,7 @@ Follow the instructions given on the ROS wiki [here](http://wiki.ros.org/kinetic
 * Make sure you get all the dependencies installed:
   * `$ rosdep install -i -y --from-paths ./naoqi_driver`
 * And finally build the packages:
-  * `$ source /opt/ros/indigo/setup.sh`
+  * `$ source /opt/ros/kinetic/setup.sh`
   * `$ cd ../ && catkin_make`
 4. Installing NAOqi SDK:
 * Download python SDK (download "pynaoqi-python2.7-2.1.2.17-linux64", this is the one we tested and works)
