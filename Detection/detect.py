@@ -64,9 +64,14 @@ class detect:
                 pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
                 dst = cv2.perspectiveTransform(pts,M)
 
-                img2 = cv2.polylines(img2,[np.int32(dst)],True, 255 ,3, cv2.LINE_AA)
-                print([np.int32(dst)][0][0][0][0])
-                print([np.int32(dst)])
+                # draw rectangle and center on image
+                # uncomment for original detection
+                # img2 = cv2.polylines(img2, [np.int32(dst)], True, 255, 3, cv2.LINE_AA)
+                # uncomment for rectangle draw
+                # img2 = self.draw_rectangle(img2, [np.int32(dst)])
+                # uncomment for rotate image
+                img2 = self.rotate_image(img2, [np.int32(dst)])
+
                 self.successfull += 1
                 cv2.imwrite(args.out_path + image_path_list[i], img2)
 
@@ -74,10 +79,106 @@ class detect:
                 print "Not enough matches are found - %d/%d" % (len(good),MIN_MATCH_COUNT)
                 # matchesMask = None
 
-    def calculate_rectangle_points(self, corners):
-        
+    # solution 1: just make a rectangle over the detected rectangle
+    def draw_rectangle(self, img, points):
+        # Calculate rectangle and center
+        corners = self.calculate_rectangle_opposite_corners(points)
+        center = self.calculate_center(corners)
+
+        img = cv2.rectangle(img, corners[0], corners[1], 255, 3)
+        img = cv2.circle(img, center, 0, 255, 10)
+        return img
+
+    def calculate_rectangle_opposite_corners(self, points):
+        left = right = points[0][0][0][0]
+        top = bottom = points[0][0][0][1]
         for i in range(4):
-            left = corners[0][0][0][0] + corners[0][0][0][0]
+            newX = points[0][i][0][0]
+            newY = points[0][i][0][1]
+            print([newX, newY])
+            if newX < left:
+                left = newX
+            elif newX > right:
+                right = newX
+            if newY < top:
+                top = newY
+            elif newY > bottom:
+                bottom = newY
+        corners = [(left, top), (right, bottom)]
+        return corners
+
+    def calculate_center(self, points):
+        x = (points[0][0] + points[1][0])/2
+        y = (points[0][1] + points[1][1])/2
+        point = (x, y)
+        return point
+
+    # solution 2: rotate the image
+    def rotate_image(self, img, points):
+        print("POINTS COMING IN:")
+        print(points)
+        angle = self.calculate_rotation(points)
+        corners = self.calculate_rectangle_opposite_corners(points)
+        center = self.calculate_center(corners)
+        print("-------------------ANGLE: " + str(angle))
+        print("-------------------CENTER: " + str(center))
+
+        # Uncomment for angle in radians
+        angle *= 180/np.pi
+
+        shape = img.shape[:2]
+
+        matrix = cv2.getRotationMatrix2D(center, angle, 1)
+        img = cv2.warpAffine(img, matrix, shape)
+
+        return img
+
+    def calculate_rotation(self, points):
+        # calculate middle of rectangle
+        corners = self.calculate_rectangle_opposite_corners(points)
+        p1 = self.calculate_center(corners)
+
+        # calculate middle of point3 en 4
+        print("PRINTING POINTS 3 AND 4 "+ str(points[0][2][0]) + str(points[0][3][0]) )
+        point3 = points[0][2][0]
+        point4 = points[0][3][0]
+        p2 = self.calculate_center([point3, point4])
+
+        # calculate distance between p1 and p2 in our case equal to distance between p1 and p3
+        s3 = s2 = self.calculate_distance(p1, p2)
+
+        # define p3
+        p3 = ((p1[0] + s2), p1[1])
+
+        # calculate distance between p2 and p3
+        s1 = self.calculate_distance(p2, p3)
+
+        # calculate angle
+        angle = self.calculate_angle(s1, s2, s3)
+
+        return angle
+
+
+
+
+    def calculate_distance(self, point1, point2):
+        # calculate the power of (x1-x2)^2 and (y1-y2)^2
+        arg = np.power([(point1[0] - point2[0]), (point1[1] - point2[1])], 2)
+        distance = np.sqrt(arg[0] + arg[1])
+        return distance
+
+    def calculate_angle(self, side1, side2, side3):
+        # calculate arccos((b^2+c^2-a^2)/(2*b*c))
+        power = np.power([side1, side2, side3], 2 )
+        x = power[1] + power[2] - power[0]
+        y = 2 * side2 * side3
+        angle = np.arccos(x/y)
+        return angle
+
+
+
+
+
 
 
 def main(args):
