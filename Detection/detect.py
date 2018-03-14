@@ -75,8 +75,9 @@ class detect:
                 # matchesMask = None
 
     def calculate_rectangle_points(self, corners):
+        
         for i in range(4):
-        centerX = corners[0][0][0][0] + corners[0][0][0][0]
+            left = corners[0][0][0][0] + corners[0][0][0][0]
 
 
 def main(args):
