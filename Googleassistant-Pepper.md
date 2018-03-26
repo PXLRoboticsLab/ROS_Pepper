@@ -8,7 +8,6 @@ If you want to record and playback on a local machine only, you can skip step X.
 full tutorial of Google Assistant or at least have the required directories under ~/.config available. If any issues are 
 encountered, make sure to read the **troubleshoot** section. 
 
-
 ## 2. Requirements
 - ROS Kinetic (test on other versions, at own risk!) 
 - Python >= 2.7.12
@@ -30,36 +29,46 @@ encountered, make sure to read the **troubleshoot** section.
 
 #### 3.1.4 Install Python dependencies
 Navigate to the directory of the extracted tar
-``cd <pathofsnowboyassistant>``
+
+```cd <pathofsnowboyassistant>```
 
 Install the necessary Python requirements
-``pip install -r requirements.txt``
+
+```pip install -r requirements.txt```
 
 #### 3.1.5 Check Google Assistant config data
 ``cd ~/.config``
+
 ``ls``
+
 Confirm that both **googlesamples-assistant** and **google-oauthlib-tool** directories are present and not empty 
 
 ####  3.1.6 Test audio and microphone
 speaker
+
 ``speaker-test -t wav -c 6``
  
 microphone
+
 ``arecord -d 5 /tmp/test.wav``
+
 ``aplay /tmp/test.wav``
 
 adjust settings if needed
+
 ``alsamixer``
 
 #### 3.1.7 Test demo
-Run the demo with ``python demo.py``
+Run the demo with 
+
+``python demo.py``
 
 Activate the assistant with the word "Pepper" and if you hear a sound, the assistant is listening. 
 Confirm the demo is working correctly by analyzing the logs on the command line.
 
 #### 3.1.8 Change trained voice
 
-If you want to change the hotword or replace it with a better model (with your own voice for example), follow the guide
-on 
+If you want to change the hotword or replace it with a better model (with your own voice for example), use https://snowboy.kitt.ai/dashboard
+Replace the .pmdl file in the directory afterwards with the newly trained .pmdl file. 
 
 ### 3.2 Using the Pepper as audio input and output (to be continued) 
