@@ -131,7 +131,7 @@ Confirm that the loopback device has been created with
 
 ``python -m sounddevice``
 
-You should see a device named "loop", remember its index number. 
+You should see a device named "loop", remember or write down its index number (something between 0-10 usually). 
 
 #### 3.2.6 Choose the loopback device as playback device
 
