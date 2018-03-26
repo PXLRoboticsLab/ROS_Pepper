@@ -127,6 +127,30 @@ pcm.loop {
     
 }
 ```
+Confirm that the loopback device has been created with 
+
+``python -m sounddevice``
+
+You should see a device named "loop", remember its index number. 
+
+#### 3.2.6 Choose the loopback device as playback device
+
+Open PulseAudio control panel with 
+
+``pavucontrol``
+
+Go to the "Playback" tab, you should see an "audio_play" device. Select "Loopback Analog Stereo" in the dropdown menu next to the symbol. All the sound that is retrieved by the topic and played back, is now redirected to the loopback device. Remember the index number that you needed to write down earlier? By providing this number to the snowboyassistant, you basically tell the assistant to listen to the loopback device which plays the audio coming from the remote host (via a topic). 
+
+#### 3.2.7 Test demo 
+
+You can now start the Pepper (or any other remote device of preference) and wait for the "audio/audio" topic to appear. Start the playback node on the local host with
+
+`` roslaunch pepper_audio audio.launch ``
+
+Run the demo again and provide the index number earlier as a parameter
+
+``python demo.py <indexnumber>``
+
 
 ## 4. Troubleshooting
 
