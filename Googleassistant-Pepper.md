@@ -24,24 +24,27 @@ encountered, make sure to read the **troubleshoot** section.
 ``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev``
 
 #### 3.1.2 Get snowboygoogle tar 
+``git clone https://github.com/PXLRoboticsLab/ROS_Pepper``
 
 #### 3.1.3 Extract to desired workplace
+Navigate to the cloned folder and extract the tar file
+
+``cd <pathofsnowboyassistant>``
+
+``tar xvf snowboyassistant.tar.gz``
 
 #### 3.1.4 Install Python dependencies
-Navigate to the directory of the extracted tar
-
-```cd <pathofsnowboyassistant>```
-
 Install the necessary Python requirements
 
-```pip install -r requirements.txt```
+``pip install -r requirements.txt``
 
 #### 3.1.5 Check Google Assistant config data
 ``cd ~/.config``
 
 ``ls``
 
-Confirm that both **googlesamples-assistant** and **google-oauthlib-tool** directories are present and not empty 
+Confirm that both **googlesamples-assistant** and **google-oauthlib-tool** directories are present and not empty.
+If they do not exist, please follow the Google Assistant Python SDK tutorial mentioned above!
 
 ####  3.1.6 Test audio and microphone
 speaker
