@@ -21,41 +21,50 @@ encountered, make sure to read the **troubleshoot** section.
 ### 3.1 Using local machine as audio input and output
 
 #### 3.1.1 Install a few dependencies 
+
 ``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev``
 
 #### 3.1.2 Get snowboygoogle tar 
+
 ``git clone https://github.com/PXLRoboticsLab/ROS_Pepper``
 
 #### 3.1.3 Extract to desired workplace
+
 Navigate to the cloned folder and extract the tar file
 
-``cd <pathofsnowboyassistant>``
-
-``tar xvf snowboyassistant.tar.gz``
+```
+cd <pathofsnowboyassistant>
+tar xvf snowboyassistant.tar.gz
+```
 
 #### 3.1.4 Install Python dependencies
+
 Install the necessary Python requirements
 
 ``pip install -r requirements.txt``
 
 #### 3.1.5 Check Google Assistant config data
-``cd ~/.config``
 
-``ls``
+```
+cd ~/.config
+ls
+```
 
 Confirm that both **googlesamples-assistant** and **google-oauthlib-tool** directories are present and not empty.
 If they do not exist, please follow the Google Assistant Python SDK tutorial mentioned above!
 
 ####  3.1.6 Test audio and microphone
+
 speaker
 
 ``speaker-test -t wav -c 6``
  
 microphone
 
-``arecord -d 5 /tmp/test.wav``
-
-``aplay /tmp/test.wav``
+```
+arecord -d 5 /tmp/test.wav
+aplay /tmp/test.wav
+```
 
 adjust settings if needed
 
@@ -75,3 +84,60 @@ If you want to change the hotword or replace it with a better model (with your o
 Replace the .pmdl file in the directory afterwards with the newly trained .pmdl file. 
 
 ### 3.2 Using the Pepper as audio input and output (to be continued) 
+
+#### 3.2.1 Install PulseAudio dependencies
+
+``sudo apt install pavucontrol``
+
+#### 3.2.2 Install Python dependencies
+
+``pip install sounddevice``
+
+#### 3.2.3 Add loopback module 
+
+Create a loopback kernel module 
+
+``sudo modprobe snd-aloop``
+
+Confirm the new device with 
+
+``python -m sounddevice``
+
+#### 3.2.4 Add module permanently 
+
+Add "snd-aloop" to /etc/modules so that the kernel module can load at boot time.
+If you wish to unload the module, just remove the "snd-aloop" and restart.
+
+``nano /etc/modules``
+
+#### 3.2.5 Create a device for the loopback module
+
+In order to use the loopback device, edit the .asoundrc file (if not present create new). 
+
+``nano ~/.asoundrc``
+
+Add the following code 
+
+```
+pcm.loop {
+
+    type plug
+    
+    slave.pcm "hw:Loopback,1,0"
+    
+}
+```
+
+## 4. Troubleshooting
+
+Help, my ALSA config is screwed! Calm down and:
+
+```
+
+sudo rm /lib/modules/`uname -r`/kernel/sound
+
+sudo cp -a ~/backup/sound /lib/modules/`uname -r`/kernel/
+
+sudo alsa force-reload
+
+```
