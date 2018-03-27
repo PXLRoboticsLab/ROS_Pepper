@@ -22,7 +22,7 @@ encountered, make sure to read the **troubleshoot** section.
 
 #### 3.1.1 Install a few dependencies 
 
-``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev``
+``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev portaudio19-dev``
 
 #### 3.1.2 Get snowboygoogle tar 
 
