@@ -83,9 +83,9 @@ Now you are in the docker environment. Now we can test detectron. If we want to 
     demo
 
 To explain the command:
---cfg will point to the config file with which you run detectron.
---output-dir points to the folder we want to put our output. In our case we want this to be /host as this is a shared folder so that you can view this outside the docker with the gui.
---image-ext here you will state the extensions of the images.
---wts will point to the weights file used.
-and you finish with the folder in which you images are. In our case this is demo.
+--cfg will point to the config file with which you run detectron. \
+--output-dir points to the folder we want to put our output. In our case we want this to be /host as this is a shared folder so that you can view this outside the docker with the gui. \
+--image-ext here you will state the extensions of the images. \
+--wts will point to the weights file used. \ 
+demo is the path of the folder where your images are. In this case in demo. \
 If we run this command we will se the detected images apear in /host/detectron-visualizations in pdf format.
