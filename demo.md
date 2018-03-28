@@ -1,6 +1,10 @@
 # Imagescraper
 This project is used to download all the images of a certain object. You can search on both google and bing. In theory you should be able to download a 1.000 images of a chosen search. But this varies depending on the item. 
 
+# SIFT
+We will use SIFT to filter a first time through the images. Because the scrapper will download everything with Snickers this means also images related to Snickers but that aren't Snickers.
+With this we can also rotate the image and do other things. This maybe improved later on but for the moment it is very usefull for a first filter.
+
 # YOLO_Mark
 This is a very handy tool made by AlexeyAB specially for YOLO. You can label al you images manually with this tool and it will make all the annotations and files like yolo needs them. It is really as simple as copy and pasting after you are done with labeling.
 
@@ -53,13 +57,19 @@ In a new terminal run:
 
 `$ rosrun usb_cam usb_cam_node`
 
+or this command if you want to use the camera of pepper.
+
+`$ roslaunch pepper_bringup pepper_full.launch nao_ip:=<pepper ip> roscore_ip:=<ip computer> network_interface:=<network interface>`
+
 For this to work you need to install the ros packages for usb_cam.
 There is also a small bug that is solved by quickly running and stopping roslaunch of the same package: `$ roslaunch usb_cam usb_cam_node`
 When these two are running you can now navigate to the darkflow folder and start the subscriber.
 
 `$ ./subscriber.py`
 
-There are a few options you can change. For this run: `$ ./subscriber.py --h`
+Or for pepper you need to know the rostopic. If you know it for example /pepper_robot/naoqi_driver/camera/front/image_raw then you can run:
+
+`$ ./subscriber.py --source /pepper_robot/naoqi_driver/camera/front/image_raw`
 
 # Detectron
 Detectron gave a lot of troubles concerning the installation. So we changed from a regular installation to dockerfiles.
