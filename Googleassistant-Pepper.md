@@ -22,7 +22,7 @@ encountered, make sure to read the **troubleshoot** section.
 
 #### 3.1.1 Install a few dependencies 
 
-``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev``
+``sudo apt-get install python-pyaudio python3-pyaudio sox libatlas-base-dev libpcre3-dev portaudio19-dev``
 
 #### 3.1.2 Get snowboygoogle tar 
 
@@ -81,17 +81,24 @@ Confirm the demo is working correctly by analyzing the logs on the command line.
 #### 3.1.8 Change trained voice
 
 If you want to change the hotword or replace it with a better model (with your own voice for example), use https://snowboy.kitt.ai/dashboard
-Replace the .pmdl file in the directory afterwards with the newly trained .pmdl file. 
+Replace the "pepper.pmdl" file in the directory afterwards with the newly trained .pmdl file and refer to this 
+file in the assistant.py. 
 
 ### 3.2 Using the Pepper as audio input and output (to be continued) 
 
+### Client and remote 
+
 #### 3.2.1 Install PulseAudio dependencies
 
-``sudo apt install pavucontrol``
+``sudo apt install pavucontrol paprefs``
 
 #### 3.2.2 Install Python dependencies
 
 ``pip install sounddevice``
+
+#### 3.2.3 Enable net
+
+### Only client
 
 #### 3.2.3 Add loopback module 
 
@@ -119,11 +126,11 @@ In order to use the loopback device, edit the .asoundrc file (if not present cre
 Add the following code 
 
 ```
-pcm.loop {
+pcm.pepperloop {
 
-    type plug
-    
-    slave.pcm "hw:Loopback,1,0"
+    type hw
+    card Loopback
+    device 0 
     
 }
 ```
@@ -131,7 +138,7 @@ Confirm that the loopback device has been created with
 
 ``python -m sounddevice``
 
-You should see a device named "loop", remember or write down its index number (something between 0-10 usually). 
+You should see a device named "pepperloop". 
 
 #### 3.2.6 Choose the loopback device as playback device
 
