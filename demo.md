@@ -1,14 +1,14 @@
-# Imagescraper
+# Imagescraper ([github: rushilsrivastava](https://github.com/rushilsrivastava/image-scrapers))
 This project is used to download all the images of a certain object. You can search on both google and bing. In theory you should be able to download a 1.000 images of a chosen search. But this varies depending on the item. 
 
-# SIFT
+# SIFT ([github: NielsDebrier](https://github.com/NielsDebrier/SIFT-Detection-and-Rotation))
 We will use SIFT to filter a first time through the images. Because the scrapper will download everything with Snickers this means also images related to Snickers but that aren't Snickers.
 With this we can also rotate the image and do other things. This maybe improved later on but for the moment it is very usefull for a first filter.
 
-# YOLO_Mark
+# YOLO_Mark ([github: AlexeyAB](https://github.com/AlexeyAB/Yolo_mark))
 This is a very handy tool made by AlexeyAB specially for YOLO. You can label al you images manually with this tool and it will make all the annotations and files like yolo needs them. It is really as simple as copy and pasting after you are done with labeling.
 
-# Training your own model with darknet (YOLO)
+# Training your own model with darknet ([YOLO pjreddie](https://pjreddie.com/darknet/yolo/)) 
 the command(if you use the default values):
 
 `$ ./darknet detector train data/obj.data yolo-obj.cfg darknet19_448.conv.23`
@@ -33,7 +33,7 @@ To run on an image:
 
 `$ ./darknet detector test data/obj.data yolo-obj.cfg backup/yolo-obj_final.weights sample/20180307_171325.jpg`
 
-# Testing the weights with darkflow
+# Testing the weights with darkflow ([github: thtrieu](https://github.com/thtrieu/darkflow))
 You can also run the just trained files on darkflow.
 For this to work you need to change the offset from 16 to 20 in the loader.py.
 Go to darkflow/darkflow/utils/loader.py and search for self.offset = 16 and change the 16 to 20.
@@ -71,7 +71,7 @@ Or for pepper you need to know the rostopic. If you know it for example /pepper_
 
 `$ ./subscriber.py --source /pepper_robot/naoqi_driver/camera/front/image_raw`
 
-# Detectron
+# Detectron ([github: facebookresearch](https://github.com/facebookresearch/Detectron))
 Detectron gave a lot of troubles concerning the installation. So we changed from a regular installation to dockerfiles.
 To start the dockercontainer do the following.
 
